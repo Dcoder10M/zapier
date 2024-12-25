@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -23,8 +17,8 @@ model User {
 model Zap {
   id        String   @id @default(uuid())
   triggerId String
-  trigger   Trigger?
   action    Action[]
+  trigger   Trigger?
   zapRun    ZapRun[]
 }
 
@@ -45,9 +39,10 @@ model AvailableTrigger {
 model Action {
   id                String          @id @default(uuid())
   zapId             String
-  zap               Zap             @relation(fields: [zapId], references: [id])
   availableActionId String
+  sortingOrder      Int             @default(0)
   availableAction   AvailableAction @relation(fields: [availableActionId], references: [id])
+  zap               Zap             @relation(fields: [zapId], references: [id])
 }
 
 model AvailableAction {

@@ -26,8 +26,6 @@ async function main() {
         continue
       }
 
-      console.log(pendingRows);
-      
       await producer.send({
         topic: TOPIC_NAME,
         messages: pendingRows.map((row) => ({
