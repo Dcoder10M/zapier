@@ -25,7 +25,7 @@ async function main() {
         })
 
         //expensive op
-        await delay(5000)
+        delay(2000)
 
         //manual acknowledgement
         await consumer.commitOffsets([
@@ -39,6 +39,7 @@ async function main() {
     })
   } catch (error) {
     console.error('Error processing kafka queue:', error)
+    await shutdown()
   }
 }
 
