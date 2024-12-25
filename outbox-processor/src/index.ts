@@ -22,7 +22,7 @@ async function main() {
       })
 
       if (pendingRows.length === 0) {
-        await delay(1000)
+        await delay(5000)
         continue
       }
 
@@ -40,9 +40,10 @@ async function main() {
           },
         },
       })
+      await delay(1000)
     } catch (error) {
       console.error('Error processing outbox messages:', error)
-      await delay(1000)
+      await shutdown()
     }
   }
 }

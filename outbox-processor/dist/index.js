@@ -29,10 +29,9 @@ function main() {
                     take: 10,
                 });
                 if (pendingRows.length === 0) {
-                    yield delay(1000);
+                    yield delay(5000);
                     continue;
                 }
-                console.log(pendingRows);
                 yield producer.send({
                     topic: TOPIC_NAME,
                     messages: pendingRows.map((row) => ({
@@ -46,10 +45,11 @@ function main() {
                         },
                     },
                 });
+                yield delay(5000);
             }
             catch (error) {
                 console.error('Error processing outbox messages:', error);
-                yield delay(1000);
+                yield shutdown();
             }
         }
     });
