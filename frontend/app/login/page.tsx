@@ -9,10 +9,9 @@ import { BACKEND_URL } from '../config'
 import { useRouter } from 'next/navigation'
 
 export default function () {
-  const router = useRouter()
-  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const router = useRouter()
 
   return (
     <div>
@@ -33,14 +32,6 @@ export default function () {
           </div>
           <div className='flex-1 pt-6 pb-6 mt-12 px-4 border rounded'>
             <Input
-              label={'Name'}
-              onChange={(e) => {
-                setName(e.target.value)
-              }}
-              type='text'
-              placeholder='Your name'
-            ></Input>
-            <Input
               onChange={(e) => {
                 setEmail(e.target.value)
               }}
@@ -56,28 +47,22 @@ export default function () {
               type='password'
               placeholder='Password'
             ></Input>
-
             <div className='pt-4'>
               <PrimaryButton
                 onClick={async () => {
-                  try{
-                    const res = await axios.post(
-                      `${BACKEND_URL}/api/v1/user/signup`,
-                      {
-                        email: email,
-                        password,
-                        name,
-                      }
-                    )
-                    router.push('/login')
-                  }
-                  catch(error){
-                    console.log('Server Error: ', error);
-                  }
+                  const res = await axios.post(
+                    `${BACKEND_URL}/api/v1/user/signin`,
+                    {
+                      email: email,
+                      password,
+                    }
+                  )
+                  localStorage.setItem('token', res.data.token)
+                  router.push('/dashboard')
                 }}
                 size='big'
               >
-                Get started free
+                Login
               </PrimaryButton>
             </div>
           </div>
